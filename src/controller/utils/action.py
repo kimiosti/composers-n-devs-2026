@@ -9,6 +9,5 @@ class Action(Enum):
     MOVE_DOWN = 2
     MOVE_RIGHT = 3
     MOVE_LEFT = 4
-    ENTER = 5
     INTERACT = 6
     # TODO - more actions for all dialogue options
