@@ -39,3 +39,17 @@ class Menu():
         Return:
          - the `GameState` to which the current selection leads."""
         return self._actions[self._selected_idx]
+
+    def get_options(self) -> "List[str]":
+        """Getter for all option labels.
+        
+        Return:
+         - A `List` of string, each describing a choice option's label."""
+        return [option.get_text() for option in self._options]
+
+    def get_selected(self) -> "int":
+        """Getter for the index of the currently selected option.
+        
+        Return:
+         - The index of the currently selected option."""
+        return self._selected_idx
