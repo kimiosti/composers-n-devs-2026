@@ -2,6 +2,7 @@
 
 import random
 from model.menu.menu import Menu
+from model.menu.state_mappings import get_options_from_state
 from controller.utils.game_state import GameState
 
 class TestMenu():
@@ -51,3 +52,22 @@ class TestMenu():
                 for _ in range(random.randint(15, 255)):
                     self._menus[state].move_down()
                 assert self._menus[state].enter_selection() == state
+
+    def test_get_options(self) -> "None":
+        """Tester for the get_options method in the Menu class."""
+        for state in GameState:
+            assert self._menus[state].get_options() == get_options_from_state(state)
+
+    def test_get_selected(self) -> "None":
+        """Tester for the get_selected method in the Menu class."""
+        assert self._menus[GameState.MAIN_MENU].get_selected() == 0
+        self._menus[GameState.MAIN_MENU].move_down()
+        assert self._menus[GameState.MAIN_MENU].get_selected() == 1
+
+        for _ in range(200):
+            self._menus[GameState.MAIN_MENU].move_down()
+        assert self._menus[GameState.MAIN_MENU].get_selected() == 1
+
+        for _ in range(199):
+            self._menus[GameState.MAIN_MENU].move_up()
+        assert self._menus[GameState.MAIN_MENU].get_selected() == 0
