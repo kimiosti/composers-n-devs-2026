@@ -15,10 +15,10 @@ def main() -> "None":
     pygame.display.set_mode()
 
     while running:
-        _ = pygame.event.get()
+        events = pygame.event.get()
         pressed_keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
 
-        running = controller.update(pressed_keys, dt)
+        running = controller.update(events, pressed_keys, dt)
         controller.render_world()
         dt = clock.tick(30)
 
