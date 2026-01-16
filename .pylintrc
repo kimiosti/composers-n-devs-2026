@@ -1,5 +1,5 @@
-[MAIN]
-generated-member = pygame
-
 [MASTER]
 init-hook = 'import sys; sys.path.append("./src")'
+
+[MESSAGES CONTROL]
+disable = no-name-in-module, no-member
