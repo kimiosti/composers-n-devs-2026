@@ -10,3 +10,4 @@ class GameState(Enum):
     DIALOGUE = 3
     PAUSE_MENU = 4
     ENDING = 5
+    QUITTING = 6
