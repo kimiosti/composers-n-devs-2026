@@ -10,6 +10,7 @@ from controller.utils.action import Action
 from model.world.world import World
 from model.menu.menu import Menu
 from view.menu.menu_view import render_menu
+from view.progression.progression_view import render_level_intro
 from constant import KEY_MAPPINGS
 
 class MainController():
@@ -66,6 +67,8 @@ class MainController():
         match self._game_state:
             case menu_state if menu_state in [GameState.MAIN_MENU, GameState.PAUSE_MENU]:
                 render_menu(self._menu.get_options(), self._menu.get_selected())
+            case GameState.LEVEL_TRANSITION:
+                render_level_intro(self._progression_controller.get_level_intro())
 
     def change_state(self, dest_state: GameState) -> "None":
         """Changes the game state.
@@ -83,3 +86,6 @@ class MainController():
             else:
                 print("Cannot progress")
                 self.change_state(GameState.ENDING)
+        if self._game_state == GameState.MAIN_MENU:
+            self._progression_controller = ProgressionController()
+            self._world = self._progression_controller.get_current_world()
