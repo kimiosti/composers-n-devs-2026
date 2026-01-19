@@ -32,9 +32,7 @@ class World():
          - `action`: the action demanded by the player.
          - `dt`: the amount of time elapsed since the last world update, \
             in milliseconds."""
-        if action == Action.INTERACT:
-            pass # TODO - handle interactions
-        elif action != Action.QUIT:
+        if action not in [Action.QUIT, Action.INTERACT]:
             moved_hitbox: "Rect" = self._player.move(
                 Direction.RIGHT if action == Action.MOVE_RIGHT \
                     else Direction.LEFT if action == Action.MOVE_LEFT \
@@ -50,6 +48,10 @@ class World():
 
             if can_move and self._map.contains(moved_hitbox):
                 self._player.move_to((moved_hitbox.left, moved_hitbox.top))
+
+    def interact(self) -> "None":
+        """Performs an interaction, if possible."""
+        #TODO - implement interaction
 
     def get_background(self) -> "Tuple[str, Tuple[float, float]]":
         """Getter for the background resource.
@@ -71,13 +73,12 @@ class World():
             and size in game coordinates."""
         res: "List[Tuple[str, Rect]]" = []
         for entity in self._entities:
-            res.append(
-                (
-                    entity.get_resource_name(),
-                    entity.get_hitbox()
-                )
-            )
-        res.append(
+            res.append((
+                entity.get_resource_name(),
+                entity.get_hitbox()
+            ))
+        res.append((
             self._player.get_resource_name(),
             self._player.get_hitbox()
-        )
+        ))
+        return res
