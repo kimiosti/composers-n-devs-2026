@@ -2,6 +2,7 @@
 
 from typing import Tuple
 from pygame import Rect
+from controller.utils.game_state import GameState
 from model.world.direction import Direction
 from constant import VISUAL_ASSETS_FOLDER, CHARACTER_ASSETS_FOLDER, ANIMATION_DEPTH, \
     VISUAL_ASSETS_EXTENSION, get_direction_asset_postfix
@@ -10,7 +11,8 @@ class Entity():
     """Implementation for all non-playing game entities."""
 
     def __init__(self, pos: "Tuple[float, float]", size: "Tuple[float, float]",
-                 name: "str", direction: "Direction") -> "None":
+                 name: "str", direction: "Direction", game_id: "int",
+                 destination_state: "GameState") -> "None":
         """Instantiates a non-playing game entity.
         
         Positional arguments:  
@@ -18,11 +20,16 @@ class Entity():
             when spawned.  
          - `size`: the dimension of the entity's hitbox.  
          - `name`: the entity's name, useful for retrieving the proper visual asset.
-         - `direction`: the direction towards which the entity is facing."""
+         - `direction`: the direction towards which the entity is facing.
+         - `game_id`: the entity's in-game identifier.
+         - `destination_state`: the game state to which a successful player \
+            interaction should lead."""
         self._hitbox: "Rect" = Rect(pos, size)
         self._name: "str" = name
         self._frame_num: "int" = 0
         self._direction = direction
+        self._game_id = game_id
+        self._destination_state = destination_state
 
     def is_colliding(self, hitbox: "Rect") -> "bool":
         """Checks for collision with a given hitbox.
@@ -50,3 +57,17 @@ class Entity():
         Return:
          - The entity's hitbox, describing its position and size."""
         return Rect(self._hitbox)
+
+    def get_game_id(self) -> "int":
+        """Getter for the entity's in-game identifier.
+        
+        Return:  
+         - An integer that uniquely represents the entity in the game."""
+        return self._game_id
+
+    def get_destination_state(self) -> "GameState":
+        """Getter for the interaction destination state.
+        
+        Return:  
+         - The state to which the game goes on a successful interaction with the entity."""
+        return self._destination_state
