@@ -9,7 +9,7 @@ from controller.utils.game_state import GameState
 from controller.utils.action import Action
 from model.world.world import World
 from model.menu.menu import Menu
-from view.menu.menu_view import MenuView
+from view.menu.menu_view import render_menu
 from constant import KEY_MAPPINGS
 
 class MainController():
@@ -65,7 +65,7 @@ class MainController():
         """Renders the next frame."""
         match self._game_state:
             case menu_state if menu_state in [GameState.MAIN_MENU, GameState.PAUSE_MENU]:
-                MenuView().render_menu(self._menu.get_options(), self._menu.get_selected())
+                render_menu(self._menu.get_options(), self._menu.get_selected())
 
     def change_state(self, dest_state: GameState) -> "None":
         """Changes the game state.
