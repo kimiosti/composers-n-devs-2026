@@ -51,12 +51,12 @@ class MainController():
                             self.change_state(self._menu.enter_selection())
                             # TODO - handle interaction
                         case Action.QUIT:
-                            self.change_state(
-                                GameState.PAUSE_MENU if self._game_state == GameState.GAME
-                                else GameState.GAME if self._game_state == GameState.PAUSE_MENU
-                                else GameState.QUITTING if self._game_state == GameState.MAIN_MENU
-                                else self._game_state
-                            )
+                            if self._game_state == GameState.GAME:
+                                self.change_state(GameState.PAUSE_MENU)
+                            elif self._game_state == GameState.PAUSE_MENU:
+                                self.change_state(GameState.GAME)
+                            elif self._game_state == GameState.MAIN_MENU:
+                                self.change_state(GameState.QUITTING)
                 except KeyError:
                     pass
 
@@ -75,7 +75,6 @@ class MainController():
         
         Positional arguments:  
          - `dest_state`: the state to which the game should switch."""
-        print(f"Going to state {dest_state}")
         if self._game_state != dest_state:
             self._game_state = dest_state
             self._menu = Menu(self._game_state)
