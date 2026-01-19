@@ -43,3 +43,10 @@ class Entity():
         return VISUAL_ASSETS_FOLDER + CHARACTER_ASSETS_FOLDER + self._name \
             + get_direction_asset_postfix(self._direction) + str(self._frame_num) \
             + VISUAL_ASSETS_EXTENSION
+
+    def get_hitbox(self) -> "Rect":
+        """Getter for the entity's hitbox.
+        
+        Return:
+         - The entity's hitbox, describing its position and size."""
+        return Rect(self._hitbox)
