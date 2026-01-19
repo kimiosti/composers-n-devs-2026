@@ -7,7 +7,7 @@ from constant import VISUAL_ASSETS_FOLDER, CHARACTER_ASSETS_FOLDER, ANIMATION_DE
 
 class Entity():
     """Implementation for all non-playing game entities."""
-    
+
     def __init__(self, pos: "Tuple[float, float]", size: "Tuple[float, float]",
                  name: "str") -> "None":
         """Instantiates a non-playing game entity.
