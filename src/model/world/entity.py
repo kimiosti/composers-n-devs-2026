@@ -16,7 +16,7 @@ class Entity():
          - `pos`: the coordinates of the top-left corner of the entity's hitbox \
             when spawned.  
          - `size`: the dimension of the entity's hitbox.  
-         - `name`: the entity's name, useful for retrieving the proper texture."""
+         - `name`: the entity's name, useful for retrieving the proper visual asset."""
         self._hitbox: "Rect" = Rect(pos, size)
         self._asset_base_name: "str" = VISUAL_ASSETS_FOLDER + CHARACTER_ASSETS_FOLDER + name
         self._frame_num: "int" = 0
@@ -32,7 +32,7 @@ class Entity():
         return self._hitbox.colliderect(hitbox)
 
     def get_resource_name(self) -> "str":
-        """Getter for the proper texture name.
+        """Getter for the proper visual asset name.
         
         Return:  
          - A string identifier for the next proper resource to be shown on screen."""
