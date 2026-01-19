@@ -22,6 +22,8 @@ VISUAL_ASSETS_EXTENSION: "str" = ".png"
 
 CHARACTER_ASSETS_FOLDER: "str" = "characters/"
 
+BACKGROUND_ASSETS_FOLDER: "str" = "backgrounds/"
+
 ANIMATION_DEPTH: "int" = 2
 
 def get_direction_asset_postfix(direction: "Direction") -> "str":
