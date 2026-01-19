@@ -4,8 +4,10 @@ from typing import List
 from pygame import KEYDOWN
 from pygame.key import ScancodeWrapper
 from pygame.event import Event
+from controller.progression.progression_controller import ProgressionController
 from controller.utils.game_state import GameState
 from controller.utils.action import Action
+from model.world.world import World
 from model.menu.menu import Menu
 from view.menu.menu_view import MenuView
 from constant import KEY_MAPPINGS
@@ -17,8 +19,8 @@ class MainController():
         """Instantiates a main game controller."""
         self._game_state: "GameState" = GameState.MAIN_MENU
         self._menu: "Menu" = Menu(self._game_state)
-        self._world: "None" = None # TODO - instantiate game world.
-        self._level_number: "int" = 0 # TODO - introduce level progression controller ?
+        self._progression_controller: "ProgressionController" = ProgressionController()
+        self._world: "World" = self._progression_controller.get_current_world()
 
     def update(self, events: "List[Event]", pressed_keys: "ScancodeWrapper", dt: "int") -> "bool":
         """Performs a single model update step.
@@ -30,12 +32,11 @@ class MainController():
         
         Return:  
          - `True` if the game should keep running, `False` otherwise."""
+        updated: "bool" = False
         for key, action in KEY_MAPPINGS.items():
-            if pressed_keys[key]:
-                match action:
-                    case _:
-                        # TODO - handle in-world movement
-                        pass
+            if pressed_keys[key] and not updated:
+                self._world.update(action, dt)
+                updated = True
 
         for event in events:
             if event.type == KEYDOWN:
@@ -47,6 +48,7 @@ class MainController():
                             self._menu.move_down()
                         case Action.INTERACT:
                             self.change_state(self._menu.enter_selection())
+                            # TODO - handle interaction
                         case Action.QUIT:
                             self.change_state(
                                 GameState.PAUSE_MENU if self._game_state == GameState.GAME
@@ -56,8 +58,6 @@ class MainController():
                             )
                 except KeyError:
                     pass
-
-        #TODO - handle update step.
 
         return self._game_state != GameState.QUITTING
 
@@ -72,6 +72,14 @@ class MainController():
         
         Positional arguments:  
          - `dest_state`: the state to which the game should switch."""
+        print(f"Going to state {dest_state}")
         if self._game_state != dest_state:
             self._game_state = dest_state
             self._menu = Menu(self._game_state)
+        if self._game_state == GameState.LEVEL_TRANSITION:
+            if self._progression_controller.can_progress():
+                self._progression_controller.progress()
+                self._world = self._progression_controller.get_current_world()
+            else:
+                print("Cannot progress")
+                self.change_state(GameState.ENDING)
