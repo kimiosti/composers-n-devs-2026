@@ -18,6 +18,8 @@ def render_menu(options: "List[str]", selected: "int") -> "None":
     if display is None:
         display = pg_display.set_mode()
 
+    display.fill((0,0,0))
+
     display_width, display_height = display.get_size()
 
     max_size: "Tuple[int, int]" = (-1, -1)
