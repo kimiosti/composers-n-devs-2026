@@ -12,3 +12,11 @@ KEY_MAPPINGS: "Dict[int, Action]" = {
     pygame.K_LEFT: Action.MOVE_LEFT,
     pygame.K_x: Action.INTERACT
 }
+
+VISUAL_ASSETS_FOLDER: "str" = "resources/assets/"
+
+VISUAL_ASSETS_EXTENSION: "str" = ".png"
+
+CHARACTER_ASSETS_FOLDER: "str" = "characters/"
+
+ANIMATION_DEPTH: "int" = 2
