@@ -13,6 +13,7 @@ def get_options_from_state(state: "GameState") -> "List[str]":
      - A list of text button labels."""
     return ["Start Game", "Quit"] if state == GameState.MAIN_MENU \
         else ["Resume Game", "Main Menu"] if state == GameState.PAUSE_MENU \
+        else ["Game"] if state == GameState.LEVEL_TRANSITION \
         else [state.name]
 
 def get_actions_from_state(state: "GameState") -> "List[GameState]":
@@ -25,4 +26,5 @@ def get_actions_from_state(state: "GameState") -> "List[GameState]":
      - A list of `GameState` directing all possible menu selections."""
     return [GameState.LEVEL_TRANSITION, GameState.QUITTING] if state == GameState.MAIN_MENU \
         else [GameState.GAME, GameState.MAIN_MENU] if state == GameState.PAUSE_MENU \
+        else [GameState.GAME] if state == GameState.LEVEL_TRANSITION \
         else [state]
