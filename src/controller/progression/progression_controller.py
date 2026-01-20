@@ -16,7 +16,7 @@ class ProgressionController():
         self._world = World(
             (0,0),
             [],
-            Player((0,0), (0,0), "", parse_game_state(""), 0, parse_direction("")),
+            Player((0,0), (0,0), "", parse_direction(""), 0, parse_game_state("")),
             ""
         )
 
@@ -49,7 +49,10 @@ class ProgressionController():
         player: "Player"
         entities: "List[Entity]" = []
 
-        with open(f"src/resources/levels/{self._cur_level}/player") as player_file:
+        with open(
+            f"src/resources/levels/{self._cur_level}/player",
+            encoding="utf-8"
+        ) as player_file:
             lines = player_file.readlines()
         player = Player(
             (float(lines[0]), float(lines[1])),
@@ -62,7 +65,10 @@ class ProgressionController():
 
         i: "int" = 1
         while exists(f"src/resources/levels/{self._cur_level}/entities/{i}"):
-            with open(f"src/resources/levels/{self._cur_level}/entities/{i}") as entity_file:
+            with open(
+                f"src/resources/levels/{self._cur_level}/entities/{i}",
+                encoding="utf-8"
+            ) as entity_file:
                 lines = entity_file.readlines()
             entities.append(Entity(
                 (float(lines[0]), float(lines[1])),
@@ -73,11 +79,14 @@ class ProgressionController():
                 parse_game_state(lines[7])
             ))
             i += 1
-        
-        with open(f"src/resources/levels/{self._cur_level}/world") as world_file:
+
+        with open(
+            f"src/resources/levels/{self._cur_level}/world",
+            encoding="utf-8"
+        ) as world_file:
             lines = world_file.readlines()
         self._world = World(
-            (float(lines[0]), float(lines[1])),
+            (int(lines[0]), int(lines[1])),
             entities,
             player,
             lines[2]
