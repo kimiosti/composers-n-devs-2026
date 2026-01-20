@@ -3,7 +3,8 @@
 from typing import List
 from pygame.font import Font
 from pygame.surface import Surface
-from pygame import display as pg_display
+from pygame.display import flip
+from view.utils import get_clear_display
 
 def render_level_intro(text: "List[str]") -> "None":
     """Renders the level's introductory text.
@@ -13,12 +14,7 @@ def render_level_intro(text: "List[str]") -> "None":
     title_font: "Font" = Font("src/resources/font/game-font.ttf", size=36)
     lines_font: "Font" = Font("src/resources/font/game-font.ttf", size=24)
 
-    display: "Surface" = pg_display.get_surface()
-    if display is None:
-        display = pg_display.set_mode()
-
-    display.fill((0,0,0))
-
+    display: "Surface" = get_clear_display()
     display_width, display_height = display.get_size()
 
     title: "str" = text[0]
@@ -44,8 +40,8 @@ def render_level_intro(text: "List[str]") -> "None":
                 display_height / 2 + (i * line_surf.get_height() * (1 + interline_space))
             )
         )
-    
-    line_surf: "Surface" = lines_font.render(lines[len(lines) - 1][:-1], True, (255,255,255))
+
+    line_surf = lines_font.render(lines[len(lines) - 1][:-1], True, (255,255,255))
     display.blit(
         line_surf,
         (
@@ -54,4 +50,4 @@ def render_level_intro(text: "List[str]") -> "None":
         )
     )
 
-    pg_display.flip()
+    flip()

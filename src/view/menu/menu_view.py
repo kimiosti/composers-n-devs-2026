@@ -4,7 +4,8 @@ from math import floor
 from typing import List, Tuple
 from pygame import Surface
 from pygame.font import Font
-from pygame import display as pg_display
+from pygame.display import flip
+from view.utils import get_clear_display
 
 def render_menu(options: "List[str]", selected: "int") -> "None":
     """Renders and display the current menu selection.
@@ -14,12 +15,7 @@ def render_menu(options: "List[str]", selected: "int") -> "None":
      - `selected`: the index of the currently selected option."""
     menu_font: "Font" = Font("src/resources/font/game-font.ttf", size=36)
 
-    display: "Surface" = pg_display.get_surface()
-    if display is None:
-        display = pg_display.set_mode()
-
-    display.fill((0,0,0))
-
+    display: "Surface" = get_clear_display()
     display_width, display_height = display.get_size()
 
     max_size: "Tuple[int, int]" = (-1, -1)
@@ -63,4 +59,4 @@ def render_menu(options: "List[str]", selected: "int") -> "None":
         )
     )
 
-    pg_display.flip()
+    flip()
