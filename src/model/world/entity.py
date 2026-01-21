@@ -46,7 +46,7 @@ class Entity():
         
         Return:  
          - A string identifier for the next proper resource to be shown on screen."""
-        self._frame_num = self._frame_num + 1 % ANIMATION_DEPTH
+        self._frame_num = (self._frame_num + 1) % ANIMATION_DEPTH
         return VISUAL_ASSETS_FOLDER + CHARACTER_ASSETS_FOLDER + self._name \
             + get_direction_asset_postfix(self._direction) + str(self._frame_num) \
             + VISUAL_ASSETS_EXTENSION
