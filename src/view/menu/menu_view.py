@@ -4,7 +4,6 @@ from math import floor
 from typing import List, Tuple
 from pygame import Surface
 from pygame.font import Font
-from pygame.display import flip
 from view.utils import get_clear_display
 
 def render_menu(options: "List[str]", selected: "int") -> "None":
@@ -58,5 +57,3 @@ def render_menu(options: "List[str]", selected: "int") -> "None":
             (display_height - menu_surf.get_height()) / 2
         )
     )
-
-    flip()

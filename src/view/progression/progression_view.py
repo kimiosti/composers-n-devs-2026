@@ -3,7 +3,6 @@
 from typing import List
 from pygame.font import Font
 from pygame.surface import Surface
-from pygame.display import flip
 from view.utils import get_clear_display
 
 def render_level_intro(text: "List[str]") -> "None":
@@ -49,5 +48,3 @@ def render_level_intro(text: "List[str]") -> "None":
             display_height / 2 + (len(lines) - 1) * line_surf.get_height() * (1 + interline_space)
         )
     )
-
-    flip()
