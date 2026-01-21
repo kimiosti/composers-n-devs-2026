@@ -2,6 +2,7 @@
 
 from pygame import display as pg_display
 from pygame.surface import Surface
+from pygame.display import flip
 
 def get_clear_display() -> "Surface":
     """Initializes the screen (if necessary), cleans up the previous frame \
@@ -16,3 +17,7 @@ def get_clear_display() -> "Surface":
     display.fill((0,0,0))
 
     return display
+
+def flip_screen() -> "None":
+    """Flips the screen, showing the next frame."""
+    flip()
