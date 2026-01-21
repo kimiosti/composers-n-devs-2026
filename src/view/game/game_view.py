@@ -38,7 +38,6 @@ def render_game_map(background: "Tuple[str, Rect]", player: "Tuple[str, Rect]",
 
     blittable_sprites: "List[Tuple[str, Rect]]" = sprites + [player]
     for res_name, hitbox in blittable_sprites:
-        print(f"Game coordinates: {(hitbox.left, hitbox.top)}")
         background_surf.blit(
             smoothscale(
                 load_img(res_name),
@@ -62,8 +61,6 @@ def render_game_map(background: "Tuple[str, Rect]", player: "Tuple[str, Rect]",
         else background[1].height - VISIBLE_HEIGHT \
         if player[1].centery > background[1].height - (VISIBLE_HEIGHT / 2) \
         else player[1].centery - (VISIBLE_HEIGHT / 2)
-
-    print(f"Visibility origin: {(visible_left_edge, visible_top_edge)}")
     
     map_surf.blit(
         background_surf,
