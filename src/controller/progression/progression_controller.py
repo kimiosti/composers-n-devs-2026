@@ -55,12 +55,12 @@ class ProgressionController():
         ) as player_file:
             lines = player_file.readlines()
         player = Player(
-            (float(lines[0]), float(lines[1])),
-            (float(lines[2]), float(lines[3])),
-            lines[4],
-            parse_direction(lines[5]),
-            int(lines[6]),
-            parse_game_state(lines[7])
+            (float(lines[0][:-1]), float(lines[1][:-1])),
+            (float(lines[2][:-1]), float(lines[3][:-1])),
+            lines[4][:-1],
+            parse_direction(lines[5][:-1]),
+            int(lines[6][:-1]),
+            parse_game_state(lines[7][:-1])
         )
 
         i: "int" = 1
@@ -71,12 +71,12 @@ class ProgressionController():
             ) as entity_file:
                 lines = entity_file.readlines()
             entities.append(Entity(
-                (float(lines[0]), float(lines[1])),
-                (float(lines[2]), float(lines[3])),
-                lines[4],
-                parse_direction(lines[5]),
-                int(lines[6]),
-                parse_game_state(lines[7])
+                (float(lines[0][:-1]), float(lines[1][:-1])),
+                (float(lines[2][:-1]), float(lines[3][:-1])),
+                lines[4][:-1],
+                parse_direction(lines[5][:-1]),
+                int(lines[6][:-1]),
+                parse_game_state(lines[7][:-1])
             ))
             i += 1
 
@@ -86,8 +86,8 @@ class ProgressionController():
         ) as world_file:
             lines = world_file.readlines()
         self._world = World(
-            (int(lines[0]), int(lines[1])),
+            (int(lines[0][:-1]), int(lines[1][:-1])),
             entities,
             player,
-            lines[2]
+            lines[2][:-1]
         )
