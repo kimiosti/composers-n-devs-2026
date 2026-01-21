@@ -14,9 +14,13 @@ KEY_MAPPINGS: "Dict[int, Action]" = {
     pygame.K_x: Action.INTERACT
 }
 
-PLAYER_SPEED: "float" = 10
+PLAYER_SPEED: "float" = 100
 
-VISUAL_ASSETS_FOLDER: "str" = "resources/assets/"
+VISIBLE_WIDTH: "int" = 1000
+
+VISIBLE_HEIGHT: "int" = 650
+
+VISUAL_ASSETS_FOLDER: "str" = "src/resources/assets/"
 
 VISUAL_ASSETS_EXTENSION: "str" = ".png"
 
@@ -34,4 +38,4 @@ def get_direction_asset_postfix(direction: "Direction") -> "str":
     
     Return:  
      - A string postfix to be added to the asset name."""
-    return f"_{direction.name}_"
+    return f"_{direction.name.lower()}_"
