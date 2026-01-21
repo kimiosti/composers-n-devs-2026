@@ -12,6 +12,7 @@ from model.menu.menu import Menu
 from view.utils import flip_screen
 from view.menu.menu_view import render_menu
 from view.progression.progression_view import render_level_intro
+from view.game.game_view import render_game_map
 from constant import KEY_MAPPINGS
 
 class MainController():
@@ -70,6 +71,12 @@ class MainController():
                 render_menu(self._menu.get_options(), self._menu.get_selected())
             case GameState.LEVEL_TRANSITION:
                 render_level_intro(self._progression_controller.get_level_intro())
+            case GameState.GAME:
+                render_game_map(
+                    self._world.get_background(),
+                    self._world.get_player_sprite(),
+                    self._world.get_sprites()
+                )
         flip_screen()
 
     def change_state(self, dest_state: GameState) -> "None":
@@ -85,7 +92,6 @@ class MainController():
                 self._progression_controller.progress()
                 self._world = self._progression_controller.get_current_world()
             else:
-                print("Cannot progress")
                 self.change_state(GameState.ENDING)
         if self._game_state == GameState.MAIN_MENU:
             self._progression_controller = ProgressionController()
