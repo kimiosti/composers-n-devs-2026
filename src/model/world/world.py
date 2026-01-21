@@ -53,16 +53,16 @@ class World():
         """Performs an interaction, if possible."""
         #TODO - implement interaction
 
-    def get_background(self) -> "Tuple[str, Tuple[float, float]]":
+    def get_background(self) -> "Tuple[str, Rect]":
         """Getter for the background resource.
         
         Return:  
-         - A tuple that associates the name of the resource as a string to a tuple \
-            representing the map dimension in game coordinates."""
+         - A tuple that associates the name of the resource as a string to a `Rect` \
+            representing the origin and size of the map in game coordinates."""
         return (
             VISUAL_ASSETS_FOLDER + BACKGROUND_ASSETS_FOLDER
                 + self._name + VISUAL_ASSETS_EXTENSION,
-            self._map.size
+            self._map
         )
 
     def get_sprites(self) -> "List[Tuple[str, Rect]]":
@@ -77,8 +77,15 @@ class World():
                 entity.get_resource_name(),
                 entity.get_hitbox()
             ))
-        res.append((
+        return res
+
+    def get_player_sprite(self) -> "Tuple[str, Rect]":
+        """Getter for the player sprite.
+        
+        Return:  
+         - A tuple that associates to the player's resource name its position \
+            and size in game coordinates."""
+        return (
             self._player.get_resource_name(),
             self._player.get_hitbox()
-        ))
-        return res
+        )
