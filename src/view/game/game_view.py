@@ -9,7 +9,7 @@ from view.utils import get_clear_display
 from constant import VISIBLE_WIDTH, VISIBLE_HEIGHT
 
 def render_game_map(background: "Tuple[str, Rect]", player: "Tuple[str, Rect]",
-                    sprites: "List[str, Rect]") -> "None":
+                    sprites: "List[Tuple[str, Rect]]") -> "None":
     """Renders the game world for a single frame.
     
     Positional arguments:  
@@ -22,15 +22,16 @@ def render_game_map(background: "Tuple[str, Rect]", player: "Tuple[str, Rect]",
     display: "Surface" = get_clear_display()
     display_width, display_height = display.get_size()
 
-    map_surf_width = display_width / 9 * 7
-    map_surf_height = display_height / 9 * 7
-    map_surf: "Surface" = Surface((map_surf_width, map_surf_height))
+    map_surf: "Surface" = Surface((
+        display_width / 9 * 7,
+        display_height / 9 * 7
+    ))
 
     background_surf = smoothscale(
         load_img(background[0]),
         (
-            background[1].width / VISIBLE_WIDTH * map_surf_width,
-            background[1].height / VISIBLE_HEIGHT * map_surf_height
+            background[1].width / VISIBLE_WIDTH * map_surf.get_width(),
+            background[1].height / VISIBLE_HEIGHT * map_surf.get_height()
         )
     ).convert()
 
@@ -51,17 +52,17 @@ def render_game_map(background: "Tuple[str, Rect]", player: "Tuple[str, Rect]",
                 hitbox.top / background[1].height * background_height
             )
         )
-    
+
     visible_left_edge = 0 if player[1].centerx < VISIBLE_WIDTH / 2 \
         else background[1].width - VISIBLE_WIDTH \
         if player[1].centerx > background[1].width - (VISIBLE_WIDTH / 2) \
         else player[1].centerx - (VISIBLE_WIDTH / 2)
-    
+
     visible_top_edge = 0 if player[1].centery < VISIBLE_HEIGHT / 2 \
         else background[1].height - VISIBLE_HEIGHT \
         if player[1].centery > background[1].height - (VISIBLE_HEIGHT / 2) \
         else player[1].centery - (VISIBLE_HEIGHT / 2)
-    
+
     map_surf.blit(
         background_surf,
         (
@@ -73,7 +74,7 @@ def render_game_map(background: "Tuple[str, Rect]", player: "Tuple[str, Rect]",
     display.blit(
         map_surf,
         (
-            (display_width - map_surf_width) / 2,
-            (display_height - map_surf_height) / 2
+            (display_width - map_surf.get_width()) / 2,
+            (display_height - map_surf.get_height()) / 2
         )
     )
