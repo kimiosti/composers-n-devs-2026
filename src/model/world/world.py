@@ -48,6 +48,10 @@ class World():
 
             if can_move and self._map.contains(moved_hitbox):
                 self._player.move_to((moved_hitbox.left, moved_hitbox.top))
+                self._player.progress_animation()
+
+        for entity in self._entities:
+            entity.progress_animation()
 
     def interact(self) -> "None":
         """Performs an interaction, if possible."""
